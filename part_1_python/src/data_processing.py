@@ -1,18 +1,23 @@
 import pandas as pd
-from data_cleaning import to_dataframe, data_processing
 
-df_drugs = to_dataframe('drugs','../data/drugs.csv')
-df_drugs = data_processing(df=df_drugs, file_source='drugs')
-
-df_clinical = to_dataframe('clinical_trials', '../data/clinical_trials.csv')
-df_clinical= data_processing(df=df_clinical, file_source='clinical_trials')
-
-df_pubmed = to_dataframe('pubmed', '../data/pubmed.csv', '../data/pubmed.json')
-df_pubmed = data_processing(df=df_pubmed, file_source='pubmed')
 
 def drugs_in_publications (df_drugs, df_publication_file):
-    '''
-    '''
+
+    """
+    Return a list of dictionaries. Each element of the list contains the information 
+    about a publication: "drug_name", "publication_type", "journal", "date_mention"
+
+    Parameters
+    ----------
+        df_drugs : pandas.DataFrame
+            This is the output of the data_cleaning function with 'drugs' as file_source
+        df_drugs : pandas.DataFrame
+            This is the output of the data_cleaning function with 'pubmed' or 'clinical_trials' as file_source
+
+    Return
+    ------
+        drugs_publications: list<dict>
+    """
 
     publication_type = ""
     drugs_publications = []
@@ -25,13 +30,12 @@ def drugs_in_publications (df_drugs, df_publication_file):
 
     for index_drug, row_drug in df_drugs.iterrows():
         drug_name = row_drug["drug"]
-        
-        #filter by keeping rows that contain drug_name in title
+
         df_publication_file_filtered = df_publication_file[df_publication_file['title'].str.contains(drug_name)]
 
         for index_publication_file, row_publication_file in df_publication_file_filtered.iterrows():
             journal = row_publication_file["journal"]
-            date_mention = row_publication_file["date"]
+            date_mention = str(row_publication_file["date"])
             drugs_publications.append(
                 {
                     "drug_name": drug_name,
@@ -41,9 +45,4 @@ def drugs_in_publications (df_drugs, df_publication_file):
                 }
             )
 
-    return drugs_publications
-
-
-
-#drugs_in_publications(df_drugs, df_pubmed)
- 
+    return drugs_publications 
