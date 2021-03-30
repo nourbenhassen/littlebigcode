@@ -1,0 +1,7 @@
+Quels sont les éléments à considérer pour faire évoluer votre code afin qu’il puisse gérer de grosses
+volumétries de données (fichiers de plusieurs To ou millions de fichiers par exemple) ?
+Pourriez-vous décrire les modifications qu’il faudrait apporter, s’il y en a, pour prendre en considération de
+telles volumétries ?
+
+La librairie Pandas reste une bonne solution pour une volumétrie de données allant jusqu'à plusieurs GB.
+Dépassée cette volumétrie, il faut se tourner vers des technologies de calculs distribués comme Spark.

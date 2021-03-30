@@ -1,3 +1,0 @@
-PART_1_PYTHON
-
-Steps:
